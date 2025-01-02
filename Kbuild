@@ -12,7 +12,8 @@ endif
 
 ifeq ($(CONFIG_ARCH_PINEAPPLE), y)
 dtbo-y += gpu/pineapple-gpu.dtbo \
-		gpu/pineapple-v2-gpu.dtbo
+		gpu/pineapple-v2-gpu.dtbo \
+		gpu/pineapple-v2-sg-gpu.dtbo
 endif
 
 ifeq ($(CONFIG_ARCH_SA8155), y)
@@ -79,8 +80,15 @@ ifeq ($(CONFIG_ARCH_VOLCANO), y)
 dtbo-y += gpu/volcano-gpu.dtbo
 dtbo-y += gpu/volcano6-gpu.dtbo
 dtbo-y += gpu/volcano6p-gpu.dtbo
-dtbo-y += gpu/volcano6i-gpu.dtbo
-dtbo-y += gpu/volcano6ip-gpu.dtbo
+
+dtbo-y += gpu/volcano6i-fp1-gpu.dtbo
+dtbo-y += gpu/volcano6i-fp2-gpu.dtbo
+dtbo-y += gpu/volcano6i-fp3-gpu.dtbo
+dtbo-y += gpu/volcano6i-fp4-gpu.dtbo
+dtbo-y += gpu/volcano6ip-fp1-gpu.dtbo
+dtbo-y += gpu/volcano6ip-fp2-gpu.dtbo
+dtbo-y += gpu/volcano6ip-fp3-gpu.dtbo
+dtbo-y += gpu/volcano6ip-fp4-gpu.dtbo
 endif
 
 always-y    := $(dtb-y) $(dtbo-y)
