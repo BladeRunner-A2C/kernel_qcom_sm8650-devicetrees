@@ -171,6 +171,12 @@
 				};
 			};
 		};
+		chip_cfg@2 {
+			supported-ids = <0x1107>;
+			qcom,no-bwscale;
+			qcom,wlan-ramdump-dynamic = <0x600000>;
+			pcie-disable-l1ss;
+		};
 	};
 };
 

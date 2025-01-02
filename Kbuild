@@ -59,6 +59,10 @@ ifeq ($(CONFIG_ARCH_SDXPINN),y)
 dtbo-y += sdxpinn-cnss.dtbo
 endif
 
+ifeq ($(CONFIG_ARCH_SDXKOVA),y)
+dtbo-y += sdxkova-cnss.dtbo
+endif
+
 ifeq ($(CONFIG_ARCH_PINEAPPLE),y)
 dtbo-y += pineapple-kiwi-cnss.dtbo
 dtbo-y += pineapplep-hdk-kiwi-cnss.dtbo
@@ -77,6 +81,7 @@ endif
 
 ifeq ($(CONFIG_ARCH_VOLCANO),y)
 dtbo-y += volcano-qca6750.dtbo
+dtbo-y += volcano-wcn6450.dtbo
 endif
 
 ifeq ($(CONFIG_ARCH_MONACO),y)
@@ -90,6 +95,10 @@ dtbo-y += lemans-cnss.dtbo
 endif
 endif
 
+ifeq ($(CONFIG_ARCH_NEO),y)
+dtbo-y += neo-kiwi-cnss.dtbo
+dtbo-y += neo_luna-v2-kiwi-cnss.dtbo
+endif
 
 ifeq ($(CONFIG_ARCH_ANORAK),y)
 dtbo-y += anorak-hsp-cnss.dtbo
@@ -108,6 +117,9 @@ dtbo-y += sa6155p-vm-cnss.dtbo
 dtbo-y += monaco_auto-vm-cnss.dtbo
 endif
 
+ifeq ($(CONFIG_ARCH_QTI_VM),y)
+dtbo-y += lemans-gunyah-vm-cnss.dtbo
+endif
 
 ifeq ($(CONFIG_ARCH_SA525),y)
 dtbo-y += sa525m-cnss.dtbo

@@ -108,6 +108,9 @@ Optional properties:
   - qcom,vreg_ipa: Specifies voltage regulator used for WLAN device internal
                    power amp config
   - qcom,xo-clk-gpio: Added for QCA6490 XO CLK selection leakage prevention.
+  - firmware-managed-resources: Boolean property to decide whether WLAN
+                                power is managed with SCMI protocol by
+                                GearVM, not CNSS2.
   - platform-name-required: Boolean property to decide whether
                             platform name required.
   - qcom,pcie-switch-type: Type of PCIe switch WLAN chip connnected to.
