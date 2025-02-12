@@ -43,7 +43,7 @@
 &soc {
 	wlan: qcom,cnss-qca-converged {
 		compatible = "qcom,cnss-qca-converged";
-		reg = <0xb0000000 0x10000>;
+		reg = <0x0 0xb0000000 0x0 0x10000>;
 		reg-names = "smmu_iova_ipa";
 		qcom,converged-dt;
 		qcom,wlan-sw-ctrl-gpio = <&tlmm 76 0>;

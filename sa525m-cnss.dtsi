@@ -58,6 +58,7 @@
 			mhi,buffer-len = <0x8000>;
 			mhi,timeout = <10000>;
 			qcom,smmu-s1-enable;
+			qcom,sleep-clk-support;
 			pcie-disable-l1ss;
 
 			mhi_channels {
