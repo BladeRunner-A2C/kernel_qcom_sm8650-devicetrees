@@ -14,7 +14,7 @@ add-overlays = $(foreach o,$1,$(foreach b,$2,$(eval $(basename $b)-$(basename $o
 ifneq ($(CONFIG_ARCH_QTI_VM), y)
 
 PINEAPPLE_BASE_DTB += pineapple-v2.dtb
-PINEAPPLE_APQ_BASE_DTB += pineapplep-v2.dtb pineapplep-sg-v2.dtb
+PINEAPPLE_APQ_BASE_DTB += pineapplep-v2.dtb pineapplep-sg-v2.dtb pineappleq-v2.dtb
 
 PINEAPPLE_BOARDS += \
 		 pineapple-mtp-overlay.dtbo \
@@ -570,6 +570,22 @@ dtb-y += $(autoghgvm-dtb-y)
 endif
 endif
 
+ifeq ($(CONFIG_ARCH_LEMANS), y)
+ifeq ($(CONFIG_ARCH_QTI_VM), y)
+
+SA8797P_GH_LA_GVM_QAM_BASE_DTB += sa8797p-gunyah-vm-qam.dtb
+SA8797P_GH_LA_GVM_QAM_BOARDS += sa8797p-gunyah-vm-qam-overlay.dtbo
+
+autoghgvm-dtb-$(CONFIG_ARCH_QTI_VM) += \
+	$(call add-overlays, $(SA8797P_GH_LA_GVM_QAM_BOARDS),$(SA8797P_GH_LA_GVM_QAM_BASE_DTB)) \
+
+autoghgvm-overlays-dtb-$(CONFIG_ARCH_QTI_VM) += \
+	$(SA8797P_GH_LA_GVM_QAM_BOARDS) $(SA8797P_GH_LA_GVM_QAM_BASE_DTB) \
+
+dtb-y += $(autoghgvm-dtb-y)
+endif
+endif
+
 ifeq ($(CONFIG_ARCH_MONACO_AUTO), y)
 ifeq ($(CONFIG_ARCH_QTI_VM), y)
 
@@ -581,6 +597,15 @@ autoghgvm-dtb-$(CONFIG_ARCH_QTI_VM) += \
 
 autoghgvm-overlays-dtb-$(CONFIG_ARCH_QTI_VM) += \
 	$(MONACO_GH_LA_GVM_QAM_BOARDS) $(MONACO_GH_LA_GVM_QAM_BASE_DTB)
+
+MONACO_GH_LV_GVM_QAM_BASE_DTB += monaco-gunyah-vm-lv-qam.dtb
+MONACO_GH_LV_GVM_QAM_BOARDS += monaco-gunyah-vm-lv-qam-overlay.dtbo
+
+autoghgvm-dtb-$(CONFIG_ARCH_QTI_VM) += \
+	$(call add-overlays, $(MONACO_GH_LV_GVM_QAM_BOARDS),$(MONACO_GH_LV_GVM_QAM_BASE_DTB))
+
+autoghgvm-overlays-dtb-$(CONFIG_ARCH_QTI_VM) += \
+	$(MONACO_GH_LV_GVM_QAM_BOARDS) $(MONACO_GH_LV_GVM_QAM_BASE_DTB)
 
 dtb-y += $(autoghgvm-dtb-y)
 endif
