@@ -26,6 +26,7 @@ ifeq ($(CONFIG_ARCH_VOLCANO),y)
 dtbo-y += volcano-ese.dtbo
 dtbo-y += volcano6i-ese.dtbo
 dtbo-y += volcano6ip-ese.dtbo
+dtbo-y += volcano6i-stsafe-ese.dtbo
 endif
 
 always-y	:= $(dtb-y) $(dtbo-y)
