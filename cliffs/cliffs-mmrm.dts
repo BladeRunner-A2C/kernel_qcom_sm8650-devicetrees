@@ -9,6 +9,6 @@
 / {
 	model = "Qualcomm Technologies, Inc. cliffs SoC";
 	compatible = "qcom,cliffs";
-	qcom,msm-id = <614 0x10000>, <632 0x10000>;
+	qcom,msm-id = <614 0x10000>, <632 0x10000>, <700 0x10000>;
 	qcom,board-id = <0 0>; /* required by merge_dtbs.py */
 };
