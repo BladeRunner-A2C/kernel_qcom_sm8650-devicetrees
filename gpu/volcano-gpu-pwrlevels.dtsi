@@ -13,7 +13,8 @@
 
 			qcom,initial-pwrlevel = <8>;
 
-			qcom,sku-codes = <SKU_CODE(PCODE_UNKNOWN, FC_AD)
+			qcom,sku-codes = <SKU_CODE(PCODE_UNKNOWN, FC_AC)
+					SKU_CODE(PCODE_UNKNOWN, FC_AD)
 					SKU_CODE(PCODE_1, FC_W0)
 					SKU_CODE(PCODE_1, FC_W1)
 					SKU_CODE(PCODE_2, FC_W0)
