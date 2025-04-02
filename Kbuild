@@ -11,6 +11,7 @@ ifeq ($(CONFIG_ARCH_KALAMA),y)
 dtbo-y += kalama-cnss.dtbo
 dtbo-y += kalama-aim300-cnss.dtbo
 dtbo-y += kalama-rb5-gen2-cnss.dtbo
+dtbo-y += kalama-iot-vc-cnss.dtbo
 endif
 
 ifeq ($(CONFIG_ARCH_QCS405),y)
@@ -105,7 +106,7 @@ dtbo-y += anorak-hsp-cnss.dtbo
 dtbo-y += anorak-kiwi-cnss.dtbo
 endif
 
-ifeq ($(CONFIG_QTI_QUIN_GVM),y)
+ifeq (y, $(filter y, $(CONFIG_ARCH_QTI_VM) $(CONFIG_QTI_QUIN_GVM)))
 dtbo-y += sa8155p-vm-cnss.dtbo
 dtbo-y += sa8195p-vm-cnss.dtbo
 dtbo-y += sa8255p-vm-cnss.dtbo
@@ -123,6 +124,10 @@ endif
 
 ifeq ($(CONFIG_ARCH_SA525),y)
 dtbo-y += sa525m-cnss.dtbo
+endif
+
+ifeq ($(TARGET_SUPPORT),sa510m)
+dtbo-y += sa510m-cnss.dtbo
 endif
 
 ifeq ($(CONFIG_ARCH_KONA),y)
