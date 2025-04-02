@@ -29,6 +29,7 @@
 		qcom,bt-vdd-rfa1-supply = <&S1B>;     /* RFA 1p8 */
 		qcom,bt-vdd-rfa2-supply = <&S2B>;     /* RFA 1p2 */
 		qcom,bt-vdd-pa-supply = <&L14B>;   /* WLBT 3p3 2g*/
+		qcom,bt-vdd-pa-5g-supply = <&L15B>;   /* WLBT 3p3 5g*/
 
 		/* max voltage are set to regulator max voltage supported */
 		qcom,bt-vdd-io-config = <1800000 1800000 0 1>;
@@ -38,6 +39,7 @@
 		qcom,bt-vdd-rfa1-config = <1856000 2080000 0 1>;
 		qcom,bt-vdd-rfa2-config = <1256000 1408000 0 1>;
 		qcom,bt-vdd-pa-config = <3125000 3125000 0 1>;
+		qcom,bt-vdd-pa-5g-config = <3125000 3125000 0 1>;
 
 		qcom,pdc_init_table =
 			" {class: wlan_pdc, ss: rf, res: s3b.v, dwnval: 920}",
