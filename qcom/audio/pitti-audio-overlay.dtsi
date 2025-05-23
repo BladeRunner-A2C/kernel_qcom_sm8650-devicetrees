@@ -138,7 +138,7 @@
 			<4 DMIC5 0x4 0 SWRM_TX3_CH2>;
 
 		qcom,swr-tx-port-params =
-			<OFFSET1_VAL0 LANE1>, <OFFSET1_VAL0 LANE2>, <OFFSET1_VAL1 LANE0>, <OFFSET1_VAL1 LANE0>,
+			<OFFSET1_VAL1 LANE0>, <OFFSET1_VAL0 LANE1>, <OFFSET1_VAL0 LANE1>, <OFFSET1_VAL1 LANE0>,
 			<OFFSET1_VAL0 LANE1>, <OFFSET1_VAL1 LANE0>, <OFFSET1_VAL1 LANE0>, <OFFSET1_VAL1 LANE0>,
 			<OFFSET1_VAL0 LANE1>, <OFFSET1_VAL2 LANE0>, <OFFSET1_VAL1 LANE0>, <OFFSET1_VAL2 LANE0>,
 			<OFFSET1_VAL1 LANE0>, <OFFSET1_VAL1 LANE0>, <OFFSET1_VAL1 LANE0>, <OFFSET1_VAL1 LANE0>;
@@ -171,8 +171,7 @@
 		qcom,cdc-micbias3-mv = <1800>;
 
 		qcom,cdc-static-supplies = "cdc-vdd-rxtx",
-					   "cdc-vdd-io",
-					   "cdc-vdd-mic-bias";
+					   "cdc-vdd-io";
 		qcom,cdc-on-demand-supplies = "cdc-vdd-buck";
 	};
 
@@ -183,16 +182,32 @@
 		qcom,model = "pitti-idp-snd-card";
 		qcom,msm-mi2s-master = <1>, <1>, <1>, <1>;
 		qcom,mi2s-tdm-is-hw-vote-needed = <1>, <1>, <1>, <1>;
-		qcom,wcn-btfm = <0>;
+		qcom,wcn-btfm = <1>;
 		qcom,ext-disp-audio-rx = <0>;
 		qcom,tdm-max-slots = <4>;
 		qcom,tdm-clk-attribute = <0x1>, <0x1>, <0x1>, <0x1>;
 		qcom,mi2s-clk-attribute = <0x1>, <0x1>, <0x1>, <0x1>;
 		qcom,audio-routing =
+			"AMIC1", "Analog Mic1",
+			"AMIC1", "MIC BIAS1",
+			"AMIC2", "Analog Mic2",
+			"AMIC2", "MIC BIAS2",
+			"AMIC3", "Analog Mic3",
+			"AMIC3", "MIC BIAS3",
+			"VA AMIC1", "Analog Mic1",
+			"VA AMIC1", "VA MIC BIAS1",
+			"VA AMIC2", "Analog Mic2",
+			"VA AMIC2", "VA MIC BIAS2",
+			"VA AMIC3", "Analog Mic3",
+			"VA AMIC3", "VA MIC BIAS3",
 			"TX DMIC0", "Digital Mic0",
+			"TX DMIC0", "MIC BIAS3",
 			"TX DMIC1", "Digital Mic1",
+			"TX DMIC1", "MIC BIAS3",
 			"TX DMIC2", "Digital Mic2",
+			"TX DMIC2", "MIC BIAS1",
 			"TX DMIC3", "Digital Mic3",
+			"TX DMIC3", "MIC BIAS1",
 			"IN1_HPHL", "HPHL_OUT",
 			"IN2_HPHR", "HPHR_OUT",
 			"IN3_AUX", "AUX_OUT",
@@ -212,9 +227,13 @@
 			"VA_AIF2 CAP", "VA_SWR_CLK",
 			"VA_AIF3 CAP", "VA_SWR_CLK",
 			"VA DMIC0", "Digital Mic0",
+			"VA DMIC0", "VA MIC BIAS3",
 			"VA DMIC1", "Digital Mic1",
+			"VA DMIC1", "VA MIC BIAS3",
 			"VA DMIC2", "Digital Mic2",
-			"VA DMIC3", "Digital Mic3";
+			"VA DMIC2", "VA MIC BIAS1",
+			"VA DMIC3", "Digital Mic3",
+			"VA DMIC3", "VA MIC BIAS1";
 		qcom,msm-mbhc-usbc-audio-supported = <0>;
 		qcom,msm-mbhc-hphl-swh = <1>;
 		qcom,msm-mbhc-gnd-swh = <1>;
@@ -246,14 +265,14 @@
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
 		pinctrl-0 = <&tx_swr_clk_active &tx_swr_data0_active
-			    &tx_swr_data1_active &tx_swr_data2_active>;
+			    &tx_swr_data1_active>;
 		pinctrl-1 = <&tx_swr_clk_sleep &tx_swr_data0_sleep
-			    &tx_swr_data1_sleep &tx_swr_data2_sleep>;
+			    &tx_swr_data1_sleep>;
 		qcom,lpi-gpios;
 		qcom,tlmm-pins = <96>;
-		qcom,chip-wakeup-reg = <0x003ca04c>;
-		qcom,chip-wakeup-maskbit = <0>;
-		qcom,chip-wakeup-default-val = <0x1>;
+		qcom,chip-wakeup-reg = <0x560008>, <0x596000>, <0x596000>;
+		qcom,chip-wakeup-maskbit = <8>, <5>, <6>;
+		qcom,chip-wakeup-default-val = <0x1>, <0x1>, <0x1>;
 		#gpio-cells = <0>;
 	};
 
