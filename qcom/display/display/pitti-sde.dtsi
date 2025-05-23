@@ -7,7 +7,6 @@
 &soc {
 	mdss_rotator: qcom,mdss_rotator {
 		compatible = "qcom,sde_rotator";
-		status = "disabled";
 		reg = <0x5e00000 0xac000>,
 		      <0x5eb0000 0x2008>;
 
@@ -68,7 +67,7 @@
 	smmu_sde_unsec: qcom,smmu_sde_unsec_cb {
 		compatible = "qcom,smmu_sde_unsec";
 		iommus = <&apps_smmu 0x420 0x2>;
-		qcom,iommu-dma-addr-pool = <0x00060000 0xfffa0000>;
+		qcom,iommu-dma-addr-pool = <0x00060000 0x82CA0000 0x83A00000 0x7C600000>;
 		qcom,iommu-faults = "non-fatal";
 		qcom,iommu-earlymap; /* for cont-splash */
 		clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
@@ -102,6 +101,9 @@
 			"lut_clk", "rot_clk";
 	clock-rate = <0 0 0 0 506000000 506000000 19200000 506000000 200000000>;
 	clock-max-rate = <0 0 0 0 608000000 608000000 19200000 608000000 300000000>;
+
+	#power-domain-cells = <0>;
+	#list-cells = <1>;
 
 	vdd-supply = <&disp_cc_mdss_core_gdsc>;
 	/* data and reg bus scale settings */

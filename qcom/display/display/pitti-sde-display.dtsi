@@ -2,6 +2,10 @@
 #include "pitti-sde-display-common.dtsi"
 
 &soc {
+	disp_rdump_memory: disp_rdump_region@82d00000 {
+		reg = <0x82D00000 0x00D00000>;
+		label = "disp_rdump_region";
+	};
 };
 
 &sde_dsi {
@@ -82,3 +86,11 @@
 &dsi_sim_dsc_10b_cmd {
 	qcom,ulps-enabled;
 };
+
+&reserved_memory {
+	splash_region: splash_region {
+		reg = <0x0 0x82D00000 0x0 0x00D00000>;
+		label = "cont_splash_region";
+	};
+};
+
