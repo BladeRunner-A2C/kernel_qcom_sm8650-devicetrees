@@ -22,6 +22,10 @@ dtbo-y += sun-v2-ese-cdp.dtbo
 dtbo-y += sun-v2-ese-qrd.dtbo
 endif
 
+ifeq ($(CONFIG_ARCH_VOLCANO),y)
+dtbo-y += volcano-ese.dtbo
+endif
+
 always-y	:= $(dtb-y) $(dtbo-y)
 subdir-y	:= $(dts-dirs)
 clean-files	:= *.dtb *.dtbo
