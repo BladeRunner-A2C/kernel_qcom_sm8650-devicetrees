@@ -16,6 +16,16 @@
 		qcom,iommu-dma = "fastmap";
 		status = "ok";
 
+		ssc_qup {
+			compatible = "qcom,geni-se-ssc-qup";
+			clock-names = "corex", "core2x";
+
+			clocks = <&scc SCC_QUPV3_CORE_CLK>,
+				 <&scc SCC_QUPV3_2XCORE_CLK>;
+			qcom,subsys-name = "lpass";
+			status = "ok";
+		};
+
 		/* 2-Wire UART instance */
 		qupv3_se8_2uart: qcom,qup_uart@62680000 {
 			compatible = "qcom,msm-geni-serial-hs";
@@ -33,6 +43,7 @@
 				<&qupv3_se8_2uart_rx_active>;
 			pinctrl-1 = <&qupv3_se8_2uart_sleep>;
 			interrupts = <GIC_SPI 442 IRQ_TYPE_LEVEL_HIGH>;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -53,6 +64,7 @@
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&qupv3_se8_i2c_active>;
 			pinctrl-1 = <&qupv3_se8_i2c_sleep>;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -72,6 +84,7 @@
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&qupv3_se9_i2c_active>;
 			pinctrl-1 = <&qupv3_se9_i2c_sleep>;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -91,6 +104,7 @@
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&qupv3_se10_i2c_active>;
 			pinctrl-1 = <&qupv3_se10_i2c_sleep>;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -110,6 +124,7 @@
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&qupv3_se11_i2c_active>;
 			pinctrl-1 = <&qupv3_se11_i2c_sleep>;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -129,6 +144,7 @@
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&qupv3_se12_i2c_active>;
 			pinctrl-1 = <&qupv3_se12_i2c_sleep>;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -148,6 +164,7 @@
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&qupv3_se13_i2c_active>;
 			pinctrl-1 = <&qupv3_se13_i2c_sleep>;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -173,6 +190,7 @@
 			pinctrl-1 = <&qupv3_se8_spi_sleep>;
 			spi-max-frequency = <50000000>;
 			qcom,disable-dma;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -195,6 +213,7 @@
 			pinctrl-1 = <&qupv3_se9_spi_sleep>;
 			spi-max-frequency = <50000000>;
 			qcom,disable-dma;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -217,6 +236,7 @@
 			pinctrl-1 = <&qupv3_se10_spi_sleep>;
 			spi-max-frequency = <50000000>;
 			qcom,disable-dma;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -240,6 +260,7 @@
 			pinctrl-1 = <&qupv3_se11_spi_sleep>;
 			spi-max-frequency = <50000000>;
 			qcom,disable-dma;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -263,6 +284,7 @@
 			pinctrl-1 = <&qupv3_se12_spi_sleep>;
 			spi-max-frequency = <50000000>;
 			qcom,disable-dma;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 
@@ -286,6 +308,7 @@
 			pinctrl-1 = <&qupv3_se13_spi_sleep>;
 			spi-max-frequency = <50000000>;
 			qcom,disable-dma;
+			qcom,ssr-enable;
 			status = "disabled";
 		};
 	};

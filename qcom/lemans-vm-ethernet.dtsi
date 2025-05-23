@@ -101,6 +101,7 @@
 		pcs-v3;
 		eth-c22-mdio-probe;
 		virtio-mdio;
+		gdsc-off-on-suspend;
 
 		ethqos_emb_smmu: ethqos_emb_smmu {
 			compatible = "qcom,emac-smmu-embedded";

@@ -1895,6 +1895,63 @@
 		};
 	};
 
+	hall_gpio {
+		hall_gpio_active: hall_gpio_active {
+			mux {
+				pins = "gpio12";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio12";
+				drive-strength = <2>;
+				bias-pull-up;
+				output-high;
+			};
+		};
+
+		hall_gpio_sleep: hall_gpio_sleep {
+			mux {
+				pins = "gpio12";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio12";
+				drive-strength = <2>;
+				bias-disable;
+				output-low;
+			};
+		};
+	};
+
+	ipd_vol_up_default: ipd_vol_up_default {
+		mux {
+			pins = "gpio17";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio17";
+			bias-pull-up;
+			drive-strength = <2>;
+		};
+	};
+
+	ipd_vol_down_default: ipd_vol_down_default {
+		mux {
+			pins = "gpio16";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio16";
+			bias-pull-up;
+			drive-strength = <2>;
+
+		};
+	};
+
 	usb0_phy_ps: usb0_phy_ps {
 		usb3_0_phy_portselect_default: usb3_0_phy_portselect_default {
 			mux {
