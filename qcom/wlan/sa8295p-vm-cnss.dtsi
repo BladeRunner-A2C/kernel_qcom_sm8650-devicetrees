@@ -99,7 +99,6 @@
 		chip_cfg@3 {
 			supported-ids = <0x1103>;
 			wlan_vregs;
-			qcom,no-bwscale;
 
 			qcom,wlan-ramdump-dynamic = <0x420000>;
 		};
@@ -169,7 +168,6 @@
 		chip_cfg@3 {
 			supported-ids = <0x1103>;
 			wlan_vregs;
-			qcom,no-bwscale;
 
 			qcom,wlan-ramdump-dynamic = <0x420000>;
 		};
