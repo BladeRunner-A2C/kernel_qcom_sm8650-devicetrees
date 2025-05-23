@@ -5,7 +5,8 @@ Qualcomm Technologies, Inc. Adreno GPU
 Required properties:
 - compatible:		Must be "qcom,kgsl-3d0".
 			May also includes "qcom,adreno-gpu-*" for few targets.
-			Must include "qcom,adreno-gpu-a610" for Bengal/Pitti target.
+			Must include "qcom,adreno-gpu-a610" for Bengal target.
+			Must include "qcom,adreno-gpu-a611" for Pitti target.
 			Must include "qcom,adreno-gpu-a619-holi" for Holi target.
 			Must include "qcom,adreno-gpu-a621" for Neo target.
 			Must include "qcom,adreno-gpu-a660-shima" for Shima target.
@@ -18,6 +19,7 @@ Required properties:
 			Must include "qcom,adreno-gpu-gen7-9-0" for Pineapple target.
 			Must include "qcom,adreno-gpu-gen7-9-1" for Pineapple V2 target.
 			Must include "qcom,adreno-gpu-gen7-11-0" for Cliffs target.
+			Must include "qcom,adreno-gpu-gen8-3-0" for Volcano target.
 - reg:			Specifies the list of register regions for the device.
 - reg-names:		Resource names used for the register regions specified
 			in reg.

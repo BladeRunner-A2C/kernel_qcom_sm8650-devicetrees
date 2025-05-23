@@ -1,7 +1,7 @@
 #define MHZ_TO_KBPS(mhz, w) ((mhz * 1000000 * w) / (1024))
 
 &msm_gpu {
-	compatible = "qcom,kgsl-3d0", "qcom,adreno-gpu-a610";
+	compatible = "qcom,kgsl-3d0", "qcom,adreno-gpu-a611";
 	status = "ok";
 
 	reg = <0x5900000 0x90000>;
@@ -32,8 +32,11 @@
 		"gcc_gpu_memnoc_gfx",
 		"gpu_cc_hlos1_vote_gpu_smmu";
 
-	interrupts = <0 177 IRQ_TYPE_LEVEL_HIGH>;
-	interrupt-names = "kgsl_3d0_irq";
+	interrupts = <0 177 IRQ_TYPE_LEVEL_HIGH>, <0 181 IRQ_TYPE_LEVEL_HIGH>;
+	interrupt-names = "kgsl_3d0_irq", "freq_limiter_irq";
+
+	resets = <&gpucc GPU_CC_FREQUENCY_LIMITER_IRQ_CLEAR>;
+	reset-names = "freq_limiter_irq_clear";
 
 	qcom,chipid = <0x06010100>;
 	qcom,gpu-model = "Adreno611v1";
@@ -42,17 +45,19 @@
 	vddcx-supply = <&gpu_cc_cx_gdsc>;
 	vdd-supply = <&gpu_cc_gx_gdsc>;
 
-	qcom,min-access-length = <64>;
+	qcom,min-access-length = <32>;
 
 	qcom,ubwc-mode = <2>;
 
 	qcom,enable-ca-jump;
 
+	qcom,tzone-names = "gpuss";
+
 	/* Context aware jump busy penalty in us */
 	qcom,ca-busy-penalty = <12000>;
 
-	nvmem-cells = <&gpu_speed_bin>, <&gpu_gaming_bin>;
-	nvmem-cell-names = "speed_bin", "gaming_bin";
+	nvmem-cells = <&gpu_speed_bin>;
+	nvmem-cell-names = "speed_bin";
 
 	interconnects = <&bimc MASTER_GRAPHICS_3D &bimc SLAVE_EBI_CH0>;
 	interconnect-names = "gpu_icc_path";
