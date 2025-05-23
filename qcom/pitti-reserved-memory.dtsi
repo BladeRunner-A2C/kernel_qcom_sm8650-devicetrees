@@ -8,7 +8,10 @@
 		reg = <0x0 0x80000000 0x0 0x700000>;
 	};
 
-	/* XBL boot region only required during boot */
+	xblboot_mem: xblboot_region@80700000 {
+		no-map;
+		reg = <0x0 0x80700000 0x0 0x200000>;
+	};
 
 	chipinfo_mem: chipinfo_region@80900000 {
 		no-map;
@@ -25,11 +28,6 @@
 		reg = <0x0 0x80a00000 0x0 0x200000>;
 		hwlocks = <&tcsr_mutex 3>;
 		no-map;
-	};
-
-	cpusys_vm_mem: cpusys_vm_region@80c00000 {
-		no-map;
-		reg = <0x0 0x80c00000 0x0 0x401000>;
 	};
 
 	wlan_mem: wlan_region@84000000 {
@@ -64,7 +62,7 @@
 
 	mpss_mem: mpss_region@88000000 {
 		no-map;
-		reg = <0x0 0x88000000 0x0 0x15e00000>;
+		reg = <0x0 0x88000000 0x0 0xa000000>;
 	};
 
 	/* UEFI region reclaimed by Linux */
@@ -73,6 +71,8 @@
 		no-map;
 		reg = <0x0 0xa7d00000 0x0 0x300000>;
 	};
+
+	/* Linux kernel image is loaded at 0xa8000000 */
 
 	tz_stat_mem: tz_stat_region@c4000000 {
 		no-map;
@@ -91,7 +91,7 @@
 
 	trusted_apps_mem: trusted_apps_region@c5100000 {
 		no-map;
-		reg = <0x0 0xc5100000 0x0 0x2100000>;
+		reg = <0x0 0xc5100000 0x0 0x1200000>;
 	};
 
 };

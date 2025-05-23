@@ -101,8 +101,11 @@ SoCs:
 - PINEAPPLE
   compatible = "qcom,pineapple", "qcom,pineapplep"
 
+- ANORAK
+  compatible = "qcom,anorak", "qcom,anorakp"
+
 - NIOBE
-  compatible = "qcom,niobe"
+  compatible = "qcom,niobe", "qcom,niobep"
 
 - LEMANS
   compatible = "qcom,lemans"
@@ -120,7 +123,7 @@ SoCs:
   compatible = "qcom,pitti"
 
 - VOLCANO
-  compatible = "qcom,volcano"
+  compatible = "qcom,volcano", "qcom,volcanop"
 
 Generic board variants:
 
@@ -129,6 +132,9 @@ Generic board variants:
 
 - IDP device:
   compatible = "qcom,idp"
+
+- QXR device:
+  compatible = "qcom,qxr"
 
 - MTP device:
   compatible = "qcom,mtp"
@@ -322,6 +328,12 @@ compatible = "qcom,pineapplep-hdk"
 compatible = "qcom,pineapplep-atp"
 compatible = "qcom,pineapplep-rcm"
 compatible = "qcom,niobe-rumi"
+compatible = "qcom,niobe-atp"
+compatible = "qcom,niobe-idp"
+compatible = "qcom,niobe-qxr"
+compatible = "qcom,niobep-atp"
+compatible = "qcom,niobep-idp"
+compatible = "qcom,niobep-qxr"
 compatible = "qcom,quinvm"
 compatible = "qcom,direwolf"
 compatible = "qcom,lemans-rumi"
@@ -362,8 +374,22 @@ compatible = "qcom,monaco_auto-adas-adp-star"
 compatible = "qcom,monaco_auto-ivi"
 compatible = "qcom,monaco_auto-ivi-adp-air"
 compatible = "qcom,monaco_auto-ivi-adp-star"
+compatible = "qcom,anorak-idp"
+compatible = "qcom,anorak-qxr"
+compatible = "qcom,anorak-atp"
+compatible = "qcom,anorakp-idp"
+compatible = "qcom,anorakp-qxr"
+compatible = "qcom,anorakp-atp"
 compatible = "qcom,pitti-rumi"
 compatible = "qcom,pitti-idp"
 compatible = "qcom,pitti-atp"
 compatible = "qcom,pitti-qrd"
 compatible = "qcom,volcano-rumi"
+compatible = "qcom,volcano-atp"
+compatible = "qcom,volcano-idp"
+compatible = "qcom,volcano-mtp"
+compatible = "qcom,volcano-qrd"
+compatible = "qcom,volcanop-atp"
+compatible = "qcom,volcanop-idp"
+compatible = "qcom,volcanop-mtp"
+compatible = "qcom,volcanop-qrd"

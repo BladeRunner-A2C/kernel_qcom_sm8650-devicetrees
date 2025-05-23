@@ -18,11 +18,11 @@
 };
 
 &qupv3_se2_4uart {
-	status = "disabled";
+	status = "ok";
 };
 
 &qcom_rng_ee3 {
-	status = "disabled";
+	status = "ok";
 };
 
 &pcie0 {
@@ -33,3 +33,10 @@
 	status = "ok";
 };
 
+&usb2 {
+	status = "ok";
+};
+
+&usb2_phy2 {
+	status = "ok";
+};

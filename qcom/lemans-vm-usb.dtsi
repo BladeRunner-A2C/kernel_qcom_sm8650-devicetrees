@@ -38,7 +38,7 @@
 		qcom,pm-qos-latency = <2>;
 
 		qcom,host-poweroff-in-pm-suspend;
-
+		qcom,disable-host-ssphy-powerdown;
 		status = "disabled";
 
 		dwc3@a600000 {
@@ -76,8 +76,9 @@
 		vdda33-supply = <&L9A>;
 		qcom,vdd-voltage-level = <0 880000 880000>;
 
-		clocks = <&dummycc RPMH_CXO_CLK>;
-		clock-names = "ref_clk_src";
+		clocks = <&dummycc RPMH_CXO_CLK>,
+				<&gcc GCC_USB_CLKREF_EN>;
+		clock-names = "ref_clk_src", "ref_clk";
 
 		resets = <&gcc GCC_USB2_PHY_PRIM_BCR>;
 		reset-names = "phy_reset";
@@ -261,7 +262,7 @@
 
 		qcom,host-poweroff-in-pm-suspend;
 		qcom,default-mode-host;
-
+		qcom,disable-host-ssphy-powerdown;
 		status = "disabled";
 
 		dwc3@a800000 {

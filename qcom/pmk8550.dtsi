@@ -108,6 +108,16 @@
 			reg = <0x9d00>;
 		};
 
+		pmk8550_sdam_49: sdam@a000 {
+			compatible = "qcom,spmi-sdam";
+			reg = <0xa000>;
+		};
+
+		pmk8550_sdam_53: sdam@a400 {
+			compatible = "qcom,spmi-sdam";
+			reg = <0xa400>;
+		};
+
 		pmk8550_sdam_71: sdam@b600 {
 			compatible = "qcom,spmi-sdam";
 			reg = <0xb600>;
@@ -121,7 +131,7 @@
 			reg = <0x1300>, <0x800>;
 			reg-names = "pon_hlos", "pon_pbs";
 
-			pwrkey {
+			pmk8550_pwrkey: pwrkey {
 				compatible = "qcom,pmk8350-pwrkey";
 				interrupts = <0x0 0x13 0x7 IRQ_TYPE_EDGE_BOTH>;
 				linux,code = <KEY_POWER>;

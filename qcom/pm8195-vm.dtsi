@@ -4,11 +4,6 @@
 #include <dt-bindings/spmi/spmi.h>
 
 &spmi_bus {
-	#address-cells = <2>;
-	#size-cells = <0>;
-	interrupt-controller;
-	#interrupt-cells = <4>;
-
 	qcom,pm8195@0 {
 		compatible = "qcom,spmi-pmic";
 		reg = <0 SPMI_USID>;
@@ -20,6 +15,7 @@
 			reg = <0x6000>, <0x6100>;
 			reg-names = "rtc", "alarm";
 			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
+			qcom,disable-alarm-wakeup;
 		};
 
 		pm8195_1_gpios: pinctrl@c000 {

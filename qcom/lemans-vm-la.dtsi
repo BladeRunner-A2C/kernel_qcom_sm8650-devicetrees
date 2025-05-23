@@ -1,3 +1,5 @@
+#include "lemans-vm-ethernet.dtsi"
+
 &soc {
 	hsi2s: qcom,hsi2s@3B40000 {
 		compatible = "qcom,sa8255-hsi2s", "qcom,hsi2s";
@@ -97,14 +99,22 @@
 		qcom,arm-smmu;
 		reg = <0x23049000 0x1000>;
 		reg-names = "stmmaceth";
-		interrupts-extended = <&intc 0 945 4>, <&intc 0 946 4>,
+		interrupts-extended = <&intc 0 945 4>, <&intc 0 944 4>,
 			<&intc 0 943 4>, <&intc 0 942 4>,
 			<&intc 0 941 4>, <&intc 0 940 4>,
-			<&intc 0 939 4>, <&intc 0 938 4>;
-		interrupt-names = "tx_rx_ch0_intr", "tx_rx_ch1_intr",
-			"tx_rx_ch2_intr", "tx_rx_ch3_intr",
-			"tx_rx_ch4_intr", "tx_rx_ch5_intr",
-			"tx_rx_ch6_intr", "tx_rx_ch7_intr";
+			<&intc 0 939 4>, <&intc 0 938 4>,
+			<&intc 0 859 4>,<&intc 0 863 4>,
+			<&intc 0 866 4>,<&intc 0 869 4>,
+			<&intc 0 870 4>,<&intc 0 871 4>,
+			<&intc 0 872 4>,<&intc 0 858 4>;
+		interrupt-names = "tx_ch0_intr", "tx_ch1_intr",
+			"tx_ch2_intr", "tx_ch3_intr",
+			"tx_ch4_intr", "tx_ch5_intr",
+			"tx_ch6_intr", "tx_ch7_intr",
+			"rx_ch0_intr","rx_ch1_intr",
+			"rx_ch2_intr","rx_ch3_intr",
+			"rx_ch4_intr","rx_ch5_intr",
+			"rx_ch6_intr","rx_ch7_intr";
 
 		snps,tso;
 		snps,pbl = <32>;
@@ -116,45 +126,17 @@
 		queue = <1>;
 
 		emac0_emb_smmu: emac0_emb_smmu {
-			compatible = "qcom,emac-smmu-embedded";
+			compatible = "qcom,emac-thin-smmu-embedded";
 			iommus = <&apps_smmu 0x122 0x1>;
 			qcom,iommu-dma = "fastmap";
 			qcom,iommu-dma-addr-pool = <0x80000000 0x40000000>;
 		};
 	};
 
-	emac1_hw: qcom,ethernet@23000000 {
-		compatible = "qcom,stmmac-ethqos-emac1";
-		emac-core-version = <0x30000000>;
-		qcom,arm-smmu;
-		reg = <0x23000000 0x10000>;
-		reg-names = "stmmaceth";
-		interrupts-extended = <&intc 0 772 4>, <&intc 0 773 4>,
-			<&intc 0 774 4>, <&intc 0 775 4>,
-			<&intc 0 776 4>, <&intc 0 777 4>,
-			<&intc 0 778 4>, <&intc 0 937 4>;
-		interrupt-names = "tx_rx_ch0_intr", "tx_rx_ch1_intr",
-			"tx_rx_ch2_intr", "tx_rx_ch3_intr",
-			"tx_rx_ch4_intr", "tx_rx_ch5_intr",
-			"tx_rx_ch6_intr", "tx_rx_ch7_intr";
-
-		snps,tso;
-		snps,pbl = <32>;
-		mac-address = [00 55 7B B5 7D f7];
-		rx-fifo-depth = <4096>;
-		tx-fifo-depth = <4096>;
-		snps,mtl-rx-config = <&mtl_rx_setup>;
-		snps,mtl-tx-config = <&mtl_tx_setup>;
-		queue = <2>;
-		status = "disabled";
-
-		emac1_emb_smmu: emac1_emb_smmu {
-			compatible = "qcom,emac-smmu-embedded";
-			iommus = <&apps_smmu 0x44 0x1>;
-			qcom,iommu-dma = "fastmap";
-			qcom,iommu-dma-addr-pool = <0x80000000 0x40000000>;
-			status = "disabled";
-		};
+	emac_mdio_fe: emac_mdio_drv@0x1e000000 {
+		compatible = "virtio,mmio";
+		reg =<0x1e000000 0x1000>;
+		interrupts = <GIC_SPI 85 IRQ_TYPE_LEVEL_HIGH>;
 	};
 
 	ipcc_mproc_apps_ns1: qcom,ipcc@421000 {
@@ -169,7 +151,7 @@
 	virtio_glink_cma: virtio-glink-cma@2e000000 {
 		compatible = "virtio,mmio";
 		reg = <0x2e000000 0x1000>;
-		interrupts = <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>;
+		interrupts = <GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH>;
 
 		glink_bridge: virtio-glink-bridge {
 			compatible = "virtio,device49162"; /* VIRTIO_ID: 0xC00A */
@@ -180,6 +162,14 @@
 				mboxes = <&ipcc_mproc_apps_ns1 IPCC_CLIENT_CDSP 0>;
 				label = "cdsp";
 				qcom,glink-label = "cdsp";
+			};
+
+			glink-edge1 {
+				interrupt-parent = <&ipcc_mproc_apps_ns1>;
+				interrupts = <IPCC_CLIENT_NSP1 0 IRQ_TYPE_EDGE_RISING>;
+				mboxes = <&ipcc_mproc_apps_ns1 IPCC_CLIENT_NSP1 0>;
+				label = "cdsp1";
+				qcom,glink-label = "cdsp1";
 			};
 		};
 	};
@@ -192,6 +182,12 @@
 		reusable;
 		alignment = <0x0 0x400000>;
 		size = <0x0 0xA000000>;
+	};
+
+	kinfo_mem: debug_kinfo_region {
+		alloc-ranges = <0x0 0x00000000 0xffffffff 0xffffffff>;
+		size = <0x0 0x1000>;
+		no-map;
 	};
 };
 
@@ -206,8 +202,8 @@
 
 / {
 	chosen {
-		bootargs = "rcupdate.rcu_expedited=1 rcu_nocbs=0-7 cgroup.memory=nokmem,nosocket kpti=0 qcom_dma_heaps.enable_bitstream_contig_heap=y arm64.nopauth kasan=off msm_show_resume_irq.debug_mask=1 ";
-		bootconfig = "androidboot.usbcontroller=a600000.dwc3 androidboot.fstab_suffix=gen4.qcom";
+		bootargs = "rcupdate.rcu_expedited=1 rcu_nocbs=0-7 cgroup.memory=nokmem,nosocket kpti=0 ufshcd-core.use_mcq_mode=n qcom_dma_heaps.enable_bitstream_contig_heap=y arm64.nopauth kasan=off msm_show_resume_irq.debug_mask=1 ";
+		bootconfig = "androidboot.usbcontroller=a600000.dwc3 androidboot.fstab_suffix=gen4.qcom androidboot.dtbo_idx=3";
 	};
 
 	rename_devices: rename_devices {
@@ -290,4 +286,11 @@
 
 &qupv3_se17_4uart {
 	status = "ok";
+};
+
+&soc {
+	google,debug-kinfo {
+		compatible = "google,debug-kinfo";
+		memory-region = <&kinfo_mem>;
+	};
 };

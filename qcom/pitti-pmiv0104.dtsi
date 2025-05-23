@@ -16,9 +16,21 @@
 	qcom,fs-current-limit = <22500>;
 };
 
-&pmiv0104_vadc {
+&pmiv0104_gpios {
 	charger_skin_therm {
-		reg = <ADC5_AMUX_THM1_100K_PU>;
+		charger_skin_therm_default: charger_skin_therm_default {
+			pins = "gpio6";
+			bias-high-impedence;
+		};
+	};
+};
+
+&pmiv0104_vadc {
+	pinctrl-names = "default";
+	pinctrl-0 = <&charger_skin_therm_default>;
+
+	charger_skin_therm {
+		reg = <ADC5_GEN3_AMUX6_THM_100K_PU>;
 		label = "charger_skin_therm";
 		qcom,ratiometric;
 		qcom,hw-settle-time = <200>;
@@ -26,7 +38,7 @@
 	};
 
 	conn_therm {
-		reg = <ADC5_AMUX_THM3_100K_PU>;
+		reg = <ADC5_GEN3_AMUX4_THM_100K_PU>;
 		label = "conn_therm";
 		qcom,ratiometric;
 		qcom,hw-settle-time = <200>;
@@ -45,14 +57,14 @@
 
 			charger_skin_therm {
 				reg = <0>;
-				io-channels = <&pmiv0104_vadc ADC5_AMUX_THM1_100K_PU>;
+				io-channels = <&pmiv0104_vadc ADC5_GEN3_AMUX6_THM_100K_PU>;
 				qcom,ratiometric;
 				qcom,hw-settle-time-us = <200>;
 			};
 
 			conn_therm {
 				reg = <1>;
-				io-channels = <&pmiv0104_vadc ADC5_AMUX_THM3_100K_PU>;
+				io-channels = <&pmiv0104_vadc ADC5_GEN3_AMUX4_THM_100K_PU>;
 				qcom,ratiometric;
 				qcom,hw-settle-time-us = <200>;
 			};
@@ -72,8 +84,8 @@
 		};
 	};
 
-	i2c@103 {
-		reg = <0x103>;  /* I2C instance 3 in ADSP for SE4 */
+	i2c@105 {
+		reg = <0x105>;  /* I2C instance 5 in ADSP for SE4 */
 		#address-cells = <1>;
 		#size-cells = <0>;
 		qcom,bus-type = "i2c";
@@ -90,17 +102,17 @@
 	status = "ok";
 
 	smb1393_1_iin {
-		reg = <0x1033401>;
+		reg = <0x1053401>;
 		label = "smb1393_1_iin";
 	};
 
 	smb1393_1_ichg {
-		reg = <0x1033402>;
+		reg = <0x1053402>;
 		label = "smb1393_1_ichg";
 	};
 
 	smb1393_1_die_temp {
-		reg = <0x1033403>;
+		reg = <0x1053403>;
 		label = "smb1393_1_die_temp";
 	};
 };

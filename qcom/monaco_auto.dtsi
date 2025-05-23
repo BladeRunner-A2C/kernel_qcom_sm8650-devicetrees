@@ -26,7 +26,7 @@
 	reserved_memory: reserved-memory { };
 
 	chosen: chosen {
-		bootargs = "cpufreq.default_governor=performance";
+		bootargs = "cpufreq.default_governor=performance ufshcd-core.use_mcq_mode=n";
 	};
 
 	soc: soc { };
@@ -37,7 +37,7 @@
 		serial0 = &qupv3_se7_2uart;
 		ufshc1 = &ufshc_mem; /* Embedded UFS slot */
 		hsuart0 = &qupv3_se2_4uart;
-		i2c18 = &qupv3_se8_i2c;
+		i2c8 = &qupv3_se8_i2c;
 		hsuart1 = &qupv3_se12_2uart;
 		i2c15 = &qupv3_se15_i2c;
 		spi10 = &qupv3_se10_spi;
@@ -863,11 +863,6 @@
 		mem_dump_table@10 {
 			compatible = "qcom,msm-imem-mem_dump_table";
 			reg = <0x10 0x8>;
-		};
-
-		restart_reason@65c {
-			compatible = "qcom,msm-imem-restart_reason";
-			reg = <0x65c 0x4>;
 		};
 
 		dload_type@1c {
@@ -1787,6 +1782,14 @@
 			mask = <0x0f>;
 			vote = <44>;
 		};
+	};
+
+	qcom,rmtfs_sharedmem@0 {
+		compatible = "qcom,sharedmem-uio";
+		reg = <0x0 0x200000>;
+		reg-names = "rmtfs";
+		qcom,client-id = <0x00000001>;
+		qcom,guard-memory;
 	};
 
 	qcom_pmu: qcom,pmu {

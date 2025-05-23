@@ -1457,7 +1457,6 @@
 		qcom,ice-clk-rates = <300000000 75000000>;
 
 		qcom,devfreq,freq-table = <50000000 200000000>;
-		qcom,scaling-lower-bus-speed-mode = "DDR52";
 
 		bus-width = <8>;
 		qcom,restore-after-cx-collapse;
@@ -1714,6 +1713,10 @@
 		read-only;
 		ranges;
 
+		feat_id: feat_id@130 {
+			reg = <0x130 0x4>;
+		};
+
 		boot_config: boot_config@6070 {
 			reg = <0x6070 0x4>;
 		};
@@ -1722,6 +1725,13 @@
 			reg = <0x132 0x2>;
 			bits = <4 8>;
 		};
+	};
+
+	qfprom_sys: qfprom@0 {
+		compatible = "qcom,qfprom-sys";
+
+		nvmem-cells = <&feat_id>;
+		nvmem-cell-names = "feat_id";
 	};
 
 	qcom,msm-imem@146aa000 {
@@ -1734,11 +1744,6 @@
 		mem_dump_table@10 {
 			compatible = "qcom,msm-imem-mem_dump_table";
 			reg = <0x10 0x8>;
-		};
-
-		restart_reason@65c {
-			compatible = "qcom,msm-imem-restart_reason";
-			reg = <0x65c 0x4>;
 		};
 
 		dload_type@1c {

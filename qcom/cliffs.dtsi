@@ -33,6 +33,13 @@
 
 	reserved_memory: reserved-memory {};
 
+	mem-offline {
+		compatible = "qcom,mem-offline";
+		offline-sizes = <0x2 0xc0000000 0x1 0x0>;
+		granule = <512>;
+		mboxes = <&qmp_aop 0>;
+	};
+
 	ddr-regions { };
 
 	firmware: firmware {};
@@ -862,11 +869,6 @@
 			reg = <0x10 0x8>;
 		};
 
-		restart_reason@65c {
-			compatible = "qcom,msm-imem-restart_reason";
-			reg = <0x65c 0x4>;
-		};
-
 		dload_type@1c {
 			compatible = "qcom,msm-imem-dload-type";
 			reg = <0x1c 0x4>;
@@ -1108,6 +1110,33 @@
 		interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
 		interrupt-names = "qcom,qtmr-intr";
 		qcom,primary;
+	};
+
+	qcom,memshare {
+		compatible = "qcom,memshare";
+
+		qcom,client_1 {
+			compatible = "qcom,memshare-peripheral";
+			qcom,peripheral-size = <0x0>;
+			qcom,client-id = <0>;
+			qcom,allocate-boot-time;
+			label = "modem";
+		};
+
+		qcom,client_2 {
+			compatible = "qcom,memshare-peripheral";
+			qcom,peripheral-size = <0x0>;
+			qcom,client-id = <2>;
+			label = "modem";
+		};
+
+		qcom,client_3 {
+			compatible = "qcom,memshare-peripheral";
+			qcom,peripheral-size = <0x500000>;
+			qcom,client-id = <1>;
+			qcom,allocate-on-request;
+			label = "modem";
+		};
 	};
 
 	clocks {
@@ -1514,6 +1543,10 @@
 
 	qcom_cpufreq_stats: qcom,cpufreq_stats {
 		compatible = "qcom,cpufreq-stats-v2";
+	};
+
+	qcom_mpam: qcom,mpam {
+		compatible = "qcom,mpam";
 	};
 
 	qcom_dynpf: qcom,dynpf {
@@ -2164,6 +2197,9 @@
 		dma-coherent;
 		qcom,iommu-dma = "fastmap";
 
+		qcom,iommu-dma-addr-pool = <0x40000000 0x10000000>;
+		qcom,iommu-geometry = <0x40000000 0x10000000>;
+
 		interconnects = <&aggre1_noc MASTER_SDCC_2 &mc_virt SLAVE_EBI1>,
 			      <&gem_noc MASTER_APPSS_PROC &cnoc_cfg
 			      SLAVE_SDCC_2>;
@@ -2238,7 +2274,6 @@
 
 		qcom,prime-mask = <0x80>;
 		qcom,silver-mask = <0x07>;
-		qcom,esi-affinity-mask = <0xf8>;
 
 		lanes-per-direction = <2>;
 		clock-names =

@@ -9,10 +9,56 @@
 	qcom,critical-devices = <&qupv3_se1_i2c>;
 };
 
+&battery_charger {
+	#cooling-cells = <2>;
+	qcom,thermal-mitigation-step = <500000>;
+};
+
 &qupv3_se1_i2c {
 	status = "ok";
 	qcom,leica-used-i2c;
 	#include "pm8008.dtsi"
+
+	awinic@64 {
+		compatible = "awinic,aw2016_led";
+		reg = <0x64>;
+
+		awinic,red {
+			awinic,name = "red";
+			awinic,id = <0>;
+			awinic,imax = <2>;
+			awinic,led-current = <3>;
+			awinic,max-brightness = <255>;
+			awinic,rise-time-ms = <6>;
+			awinic,hold-time-ms = <0>;
+			awinic,fall-time-ms = <6>;
+			awinic,off-time-ms = <4>;
+		};
+
+		awinic,green {
+			awinic,name = "green";
+			awinic,id = <1>;
+			awinic,imax = <2>;
+			awinic,led-current = <3>;
+			awinic,max-brightness = <255>;
+			awinic,rise-time-ms = <6>;
+			awinic,hold-time-ms = <0>;
+			awinic,fall-time-ms = <6>;
+			awinic,off-time-ms = <4>;
+		};
+
+		awinic,blue {
+			awinic,name = "blue";
+			awinic,id = <2>;
+			awinic,imax = <2>;
+			awinic,led-current = <3>;
+			awinic,max-brightness = <255>;
+			awinic,rise-time-ms = <6>;
+			awinic,hold-time-ms = <0>;
+			awinic,fall-time-ms = <6>;
+			awinic,off-time-ms = <4>;
+		};
+	};
 };
 
 &pm8008_8 {
@@ -242,7 +288,7 @@
 
 };
 
-&pm6125_pon {
+&pon_pwrkey {
 	qcom,log-kpd-event;
 };
 
@@ -303,6 +349,24 @@
 			};
 
 			active-config1 {
+				temperature = <125000>;
+				hysteresis = <1000>;
+				type = "passive";
+			};
+
+			display_test_config1: display-test-config1 {
+				temperature = <125000>;
+				hysteresis = <1000>;
+				type = "passive";
+			};
+
+			display_test_config2: display-test-config2 {
+				temperature = <125000>;
+				hysteresis = <1000>;
+				type = "passive";
+			};
+
+			display_test_config3: display-test-config3 {
 				temperature = <125000>;
 				hysteresis = <1000>;
 				type = "passive";

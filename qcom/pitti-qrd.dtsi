@@ -1,5 +1,6 @@
 #include <dt-bindings/gpio/gpio.h>
 #include "pitti-pm7250b.dtsi"
+#include "pitti-thermal-overlay.dtsi"
 
 &pm6125_gpios {
 	eldo9_pin {
@@ -28,7 +29,7 @@
 };
 
 &sdhc_1 {
-	status = "disabled";
+	status = "ok";
 
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&sdc1_on>;
@@ -46,7 +47,7 @@
 };
 
 &sdhc_2 {
-	status = "disabled";
+	status = "ok";
 
 	vdd-supply = <&L22A>;
 	qcom,vdd-voltage-level = <2960000 2960000>;
@@ -60,11 +61,11 @@
 	pinctrl-0 = <&sdc2_on>;
 	pinctrl-1 = <&sdc2_off>;
 
-	cd-gpios = <&tlmm 92 GPIO_ACTIVE_LOW>;
+	cd-gpios = <&tlmm 92 GPIO_ACTIVE_HIGH>;
 };
 
 &ufsphy_mem {
-	compatible = "qcom,ufs-phy-qmp-v4-pitti";
+	compatible = "qcom,ufs-phy-qmp-v4-waipio";
 
 	/* VDDA_UFS_CORE */
 	vdda-phy-supply = <&L4A>;
@@ -98,4 +99,56 @@
 	qcom,vccq-parent-max-microamp = <210000>;
 
 	status = "ok";
+};
+
+&usb0 {
+	usb-role-switch;
+	port {
+		usb_port0: endpoint {
+			remote-endpoint = <&usb_port0_connector>;
+		};
+	};
+};
+
+&ucsi {
+	connector {
+		port {
+			usb_port0_connector: endpoint {
+				remote-endpoint = <&usb_port0>;
+			};
+		};
+	};
+};
+
+&qupv3_se3_i2c {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	status = "ok";
+	qcom,i2c-touch-active = "focaltech,fts_ts";
+
+	focaltech@38 {
+		compatible = "focaltech,fts_ts";
+		reg = <0x38>;
+
+		interrupt-parent = <&tlmm>;
+		interrupts = <11 0x2008>;
+		focaltech,reset-gpio = <&tlmm 10 0x00>;
+		focaltech,irq-gpio = <&tlmm 11 0x2008>;
+		focaltech,display-coords = <0 0 1080 2408>;
+		focaltech,max-touch-number = <10>;
+		focaltech,ic-type = <0x8726081C>;
+		focaltech,touch-type = "primary";
+
+		pinctrl-names = "pmx_ts_active","pmx_ts_suspend","pmx_ts_release";
+		pinctrl-0 = <&ts_active>;
+		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+		pinctrl-2 = <&ts_release>;
+	};
+};
+
+&L24A {
+	regulator-min-microvolt = <2952000>;
+	regulator-max-microvolt = <3544000>;
+	qcom,init-voltage = <2952000>;
 };

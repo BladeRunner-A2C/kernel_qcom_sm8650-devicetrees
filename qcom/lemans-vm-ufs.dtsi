@@ -29,12 +29,12 @@
 		phys = <&ufs2phy_mem>;
 		phy-names = "ufsphy";
 		#reset-cells = <1>;
+		spm-level = <5>;
 
 		vdd-hba-supply = <&gcc_ufs_card_gdsc>;
 		vdd-hba-fixed-regulator;
 
 		vcc-supply = <&L8C>;
-		vcc-voltage-level = <2504000 2506000>;
 		vcc-max-microamp = <1100000>;
 
 		vccq-supply = <&L5C>;

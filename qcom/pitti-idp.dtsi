@@ -1,4 +1,5 @@
 #include <dt-bindings/gpio/gpio.h>
+#include "pitti-thermal-overlay.dtsi"
 
 &pm6125_gpios {
 	eldo9_pin {
@@ -27,7 +28,7 @@
 };
 
 &sdhc_1 {
-	status = "disabled";
+	status = "ok";
 
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&sdc1_on>;
@@ -45,7 +46,7 @@
 };
 
 &sdhc_2 {
-	status = "disabled";
+	status = "ok";
 
 	vdd-supply = <&L22A>;
 	qcom,vdd-voltage-level = <2960000 2960000>;
@@ -63,7 +64,7 @@
 };
 
 &ufsphy_mem {
-	compatible = "qcom,ufs-phy-qmp-v4-pitti";
+	compatible = "qcom,ufs-phy-qmp-v4-waipio";
 
 	/* VDDA_UFS_CORE */
 	vdda-phy-supply = <&L4A>;
@@ -99,6 +100,25 @@
 	status = "ok";
 };
 
+&usb0 {
+	usb-role-switch;
+	port {
+		usb_port0: endpoint {
+			remote-endpoint = <&usb_port0_connector>;
+		};
+	};
+};
+
+&ucsi {
+	connector {
+		port {
+			usb_port0_connector: endpoint {
+				remote-endpoint = <&usb_port0>;
+			};
+		};
+	};
+};
+
 &qupv3_se3_i2c {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -124,4 +144,10 @@
 		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
 		pinctrl-2 = <&ts_release>;
 	};
+};
+
+&L24A {
+	regulator-min-microvolt = <2504000>;
+	regulator-max-microvolt = <3544000>;
+	qcom,init-voltage = <2504000>;
 };
