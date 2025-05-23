@@ -14,7 +14,6 @@
 			iommus = <&apps_smmu 0x0223 0x0000>;
 			qcom,iommu-dma-addr-pool = <0x80000000 0x78000000>;
 			qcom,iommu-faults = "stall-disable", "HUPCF";
-			dma-coherent;
 			qcom,iova-best-fit;
 			pd-type = <1>;	/* ROOT_PD */
 		};
@@ -25,7 +24,6 @@
 			iommus = <&apps_smmu 0x0224 0x0000>;
 			qcom,iommu-dma-addr-pool = <0x80000000 0x78000000>;
 			qcom,iommu-faults = "stall-disable", "HUPCF";
-			dma-coherent;
 			qcom,iova-best-fit;
 			pd-type = <2>;	/* AUDIO_STATICPD */
 		};
@@ -37,7 +35,6 @@
 			qcom,iommu-dma-addr-pool = <0x80000000 0x78000000>;
 			qcom,iommu-faults = "stall-disable", "HUPCF";
 			shared-cb = <4>;
-			dma-coherent;
 			qcom,iova-best-fit;
 			pd-type = <3>;	/* SENSORS_STATICPD */
 		};
@@ -48,7 +45,6 @@
 			iommus = <&apps_smmu 0x0226 0x0000>;
 			qcom,iommu-dma-addr-pool = <0x80000000 0x78000000>;
 			qcom,iommu-faults = "stall-disable", "HUPCF";
-			dma-coherent;
 			qcom,iova-best-fit;
 			pd-type = <7>;	/* USERPD */
 		};
@@ -56,10 +52,9 @@
 		qcom,msm_fastrpc_compute_cb5 {
 			compatible = "qcom,msm-fastrpc-compute-cb";
 			label = "adsprpc-smd";
-			iommus = <&apps_smmu 0227 0x0000>;
+			iommus = <&apps_smmu 0x0227 0x0000>;
 			qcom,iommu-dma-addr-pool = <0x80000000 0x78000000>;
 			qcom,iommu-faults = "stall-disable", "HUPCF";
-			dma-coherent;
 			qcom,iova-best-fit;
 			pd-type = <7>;	/* USERPD */
 		};
