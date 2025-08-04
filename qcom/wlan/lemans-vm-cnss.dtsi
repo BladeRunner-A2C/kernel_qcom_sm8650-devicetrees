@@ -12,6 +12,7 @@
 				pins = "gpio7";
 				output-high;
 				bias-pull-up;
+				power-source = <1>; /* 0: 3.3v, 1: 1.8v */
 			};
 		};
 
@@ -25,6 +26,7 @@
 				pins = "gpio7";
 				output-low;
 				bias-pull-down;
+				power-source = <1>; /* 0: 3.3v, 1: 1.8v */
 			};
 		};
 	};
@@ -82,6 +84,12 @@
 			supported-ids = <0x1103>;
 			wlan_vregs;
 			qcom,wlan-ramdump-dynamic = <0x420000>;
+			qcom,no-bwscale;
+		};
+		chip_cfg@3 {
+			supported-ids = <0x1107>;
+			wlan_vregs;
+			qcom,wlan-ramdump-dynamic = <0x600000>;
 			qcom,no-bwscale;
 		};
 	};

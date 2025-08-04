@@ -93,20 +93,11 @@
 
 	cnss_pci0: cnss_pci0 {
 		reg = <0 0 0 0 0>;
-		qcom,iommu-group = <&cnss_pci_iommu_group0>;
+		qcom,iommu-group = <&cnss_ipa_wlan_iommu_group0>;
+		qcom,shared-cb;
 		memory-region = <&cnss_wlan_mem>;
-
 		#address-cells = <1>;
 		#size-cells = <1>;
 
-		cnss_pci_iommu_group0: cnss_pci_iommu_group0 {
-			qcom,iommu-msi-size = <0x1000>;
-			qcom,iommu-dma-addr-pool = <0x98000000 0x18000000>;
-			qcom,iommu-geometry = <0x98000000 0x18010000>;
-			qcom,iommu-dma = "fastmap";
-			qcom,iommu-pagetable = "coherent";
-			qcom,iommu-faults = "stall-disable", "HUPCF",
-					    "non-fatal";
-		};
 	};
 };

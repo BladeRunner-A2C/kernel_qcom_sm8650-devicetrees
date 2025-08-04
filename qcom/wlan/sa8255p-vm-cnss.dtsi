@@ -12,6 +12,7 @@
 				pins = "gpio7";
 				output-high;
 				bias-pull-up;
+				power-source = <1>;
 			};
 		};
 
@@ -25,6 +26,7 @@
 				pins = "gpio7";
 				output-low;
 				bias-pull-down;
+				power-source = <1>;
 			};
 		};
 	};

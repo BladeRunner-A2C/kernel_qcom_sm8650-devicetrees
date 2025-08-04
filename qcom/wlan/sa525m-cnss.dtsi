@@ -58,6 +58,7 @@
 			mhi,buffer-len = <0x8000>;
 			mhi,timeout = <10000>;
 			qcom,smmu-s1-enable;
+			qcom,sleep-clk-support;
 			pcie-disable-l1ss;
 
 			mhi_channels {
@@ -170,6 +171,12 @@
 					mhi,early-notify;
 				};
 			};
+		};
+		chip_cfg@2 {
+			supported-ids = <0x1107>;
+			qcom,no-bwscale;
+			qcom,wlan-ramdump-dynamic = <0x600000>;
+			pcie-disable-l1ss;
 		};
 	};
 };
