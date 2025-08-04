@@ -43,11 +43,16 @@ endif
 
 ifeq ($(CONFIG_ARCH_VOLCANO), y)
 dtbo-y += volcano-bt.dtbo
+dtbo-y += volcano-wcn6450-bt.dtbo
 endif
 
 ifeq ($(CONFIG_ARCH_ANORAK),y)
 dtbo-y += anorak61-kiwi-bt.dtbo
 dtbo-y += anorak61-hsp-bt.dtbo
+endif
+
+ifeq ($(CONFIG_ARCH_NEO),y)
+dtbo-y += neo_la-kiwi-bt.dtbo
 endif
 
 always-y        := $(dtb-y) $(dtbo-y)
