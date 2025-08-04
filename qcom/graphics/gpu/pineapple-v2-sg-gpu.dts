@@ -11,11 +11,16 @@
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 
 #include "pineapple-v2-gpu.dtsi"
-#include "pineapple-v2-gpu-pwrlevels.dtsi"
+#include "pineapple-v2-sg-gpu-pwrlevels.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. Pineapple";
-	compatible = "qcom,pineapple", "qcom,pineappleq";
-	qcom,msm-id = <557 0x20000>, <577 0x20000>, <696 0x20000>;
+	model = "Qualcomm Technologies, Inc. Pineapple SG";
+	compatible = "qcom,pineapple";
+	qcom,msm-id = <682 0x20000>;
 	qcom,board-id = <0 0>;
+};
+
+&msm_gpu {
+	/delete-property/qcom,gpu-model;
+	qcom,gpu-model = "Adreno33v2";
 };

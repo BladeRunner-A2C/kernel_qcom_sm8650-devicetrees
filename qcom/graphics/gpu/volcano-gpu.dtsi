@@ -50,6 +50,18 @@
 
 #define SKU_CODE(pcode, featurecode) ((pcode << 16) + featurecode)
 
+/* ACD Control register values */
+#define ACD_LEVEL_Turbo_L2	0xa02f5ffd
+#define ACD_LEVEL_Turbo_L1	0x88285ffd
+#define ACD_LEVEL_Turbo		0xa8285ffd
+#define ACD_LEVEL_Nominal_L1	0x88295ffd
+#define ACD_LEVEL_Nominal	0xa8295ffd
+#define ACD_LEVEL_SVS_L2	0x882a5ffd
+#define ACD_LEVEL_SVS_L1	0x882a5ffd
+#define ACD_LEVEL_SVS		0x882b5ffd
+#define ACD_LEVEL_LowSVS	0xc02c5ffd
+#define ACD_LEVEL_LowSVS_D1	0xc8295ffd
+
 &msm_gpu {
 	compatible = "qcom,adreno-gpu-gen8-3-0", "qcom,kgsl-3d0";
 	status = "ok";
@@ -210,5 +222,7 @@
 
 		iommus = <&kgsl_smmu 0x5 0x000>;
 		qcom,iommu-dma = "disabled";
+
+		qcom,qmp = <&aoss_qmp>;
 	};
 };
