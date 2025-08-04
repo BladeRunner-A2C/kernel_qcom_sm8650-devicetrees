@@ -1,0 +1,8 @@
+&soc {
+	stsafe320_gpio {
+		status = "ok";
+		compatible = "st,stsafe320_gpio";
+		/* gpio used as SE_nRESET */
+		gpio-power_nreset = <&tlmm 23 0x00>;
+	};
+};
