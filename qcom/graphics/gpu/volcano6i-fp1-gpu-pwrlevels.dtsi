@@ -1,0 +1,31 @@
+&msm_gpu {
+	/delete-property/ qcom,gpu-speed-bin;
+	/delete-property/ qcom,initial-pwrlevel;
+	/delete-node/ qcom,gpu-pwrlevels;
+	/delete-node/ qcom,gpu-pwrlevel-bins;
+
+	/* GPU power levels */
+	qcom,gpu-pwrlevels {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,initial-pwrlevel = <0>;
+			compatible = "qcom,gpu-pwrlevels";
+
+			qcom,gpu-pwrlevel@0 {
+					reg = <0>;
+					qcom,gpu-freq = <264000000>;
+					qcom,level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
+
+					qcom,bus-freq-ddr7 = <2>;
+					qcom,bus-min-ddr7 = <2>;
+					qcom,bus-max-ddr7 = <4>;
+
+					qcom,bus-freq-ddr8 = <2>;
+					qcom,bus-min-ddr8 = <2>;
+					qcom,bus-max-ddr8 = <4>;
+
+					qcom,acd-level = <ACD_LEVEL_LowSVS_D1>;
+			};
+	};
+};
