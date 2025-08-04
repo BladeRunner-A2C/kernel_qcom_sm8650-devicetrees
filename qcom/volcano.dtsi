@@ -25,7 +25,7 @@
 	memory { device_type = "memory"; reg = <0 0 0 0>; };
 
 	chosen: chosen {
-		bootargs = "loglevel=6 kpti=0 log_buf_len=256K swiotlb=noforce loop.max_part=7 pcie_ports=compat irqaffinity=0-3 cpufreq.default_governor=performance kasan=off cgroup.memory=nokmem,nosocket disable_dma32=on kernel.panic_on_rcu_stall=1 fw_devlink.strict=1 service_locator.enable=1 rcupdate.rcu_expedited=1 rcu_nocbs=0-7 no-steal-acc printk.console_no_auto_verbose=1 can.stats_timer=0 ftrace_dump_on_oops ufshcd-core.use_mcq_mode=n firmware_class.path=/vendor/firmware_mnt/image,/vendor/vm-system/oemvm/boot,/vendor/vm-system/trustedvm/boot,/vendor/firmware";
+		bootargs = "loglevel=6 kpti=0 log_buf_len=256K swiotlb=noforce loop.max_part=7 pcie_ports=compat irqaffinity=0-3 cpufreq.default_governor=performance kasan=off cgroup.memory=nokmem,nosocket disable_dma32=on kernel.panic_on_rcu_stall=1 fw_devlink.strict=1 service_locator.enable=1 rcupdate.rcu_expedited=1 rcu_nocbs=0-7 no-steal-acc printk.console_no_auto_verbose=1 can.stats_timer=0 ftrace_dump_on_oops firmware_class.path=/vendor/firmware_mnt/image,/vendor/vm-system/oemvm/boot,/vendor/vm-system/trustedvm/boot,/vendor/firmware";
 		stdout-path = "/soc/qcom,qupv3_0_geni_se@ac0000/qcom,qup_uart@a94000:115200n8";
 	};
 
@@ -937,6 +937,11 @@
 			reg = <0x128 0x4>;
 			bits = <25 6>;
 		};
+
+		tsens_itemp: tsens_itemp@133 {
+			reg = <0x133 0x1>;
+			bits = <7 1>;
+		};
 	};
 
 	qfprom_sys: qfprom@0 {
@@ -1040,9 +1045,9 @@
 	gic-interrupt-router {
 		compatible = "qcom,gic-intr-routing";
 		/* keep silver core only to avoid wakeup of gold cores */
-		qcom,gic-class0-cpus = <0 1 2 3>;
+		qcom,gic-class0-cpus = <&CPU0 &CPU1 &CPU2 &CPU3>;
 		/* keep gold and gold+ cores in class1 */
-		qcom,gic-class1-cpus = <4 5 6 7>;
+		qcom,gic-class1-cpus = <&CPU4 &CPU5 &CPU6 &CPU7>;
 	};
 
 	aoss_qmp: power-controller@c300000 {
@@ -2493,6 +2498,12 @@
 			qcom,glinkpkt-dev-name = "qmc_cma";
 			qcom,glinkpkt-enable-ch-close;
 		};
+
+		qcom,glinkpkt-xpan_control {
+			qcom,glinkpkt-edge = "adsp";
+			qcom,glinkpkt-ch-name = "bt_cp_ctrl";
+			qcom,glinkpkt-dev-name = "bt_cp_ctrl";
+		};
 	};
 
 	qcom,glink {
@@ -2938,6 +2949,17 @@
 	parent-supply = <&VDD_MX_LEVEL>;
 	qcom,collapse-vote = <&gcc_apcs_gdsc_vote_ctrl 1>;
 	status = "ok";
+};
+
+&gcc_pcie_1_gdsc {
+	reg = <0x190004 0x4>;
+	parent-supply = <&VDD_CX_LEVEL>;
+	qcom,collapse-vote = <&gcc_apcs_gdsc_vote_ctrl 3>;
+};
+
+&gcc_pcie_1_phy_gdsc {
+	reg = <0x1a2000 0x4>;
+	parent-supply = <&VDD_MX_LEVEL>;
 };
 
 &gcc_ufs_mem_phy_gdsc {

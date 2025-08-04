@@ -1,4 +1,5 @@
 #include "lemans-vm-ethernet.dtsi"
+#include <dt-bindings/mailbox/qcom-ipcc.h>
 
 &soc {
 	hsi2s: qcom,hsi2s@3B40000 {
@@ -75,7 +76,7 @@
 		};
 	};
 
-	mtl_rx_setup: rx-queues-config {
+	mtl_rx_setup: rx-queue-config {
 		snps,rx-queues-to-use = <1>;
 		snps,rx-sched-sp;
 
@@ -85,7 +86,7 @@
 		};
 	};
 
-	mtl_tx_setup: tx-queues-config {
+	mtl_tx_setup: tx-queue-config {
 		snps,tx-queues-to-use = <1>;
 		snps,tx-sched-sp;
 		queue {
@@ -99,11 +100,11 @@
 		qcom,arm-smmu;
 		reg = <0x23049000 0x1000>;
 		reg-names = "stmmaceth";
-		interrupts-extended = <&intc 0 945 4>, <&intc 0 944 4>,
+		interrupts-extended = <&intc 0 944 4>, <&intc 0 945 4>,
 			<&intc 0 943 4>, <&intc 0 942 4>,
 			<&intc 0 941 4>, <&intc 0 940 4>,
 			<&intc 0 939 4>, <&intc 0 938 4>,
-			<&intc 0 859 4>,<&intc 0 863 4>,
+			<&intc 0 863 4>,<&intc 0 859 4>,
 			<&intc 0 866 4>,<&intc 0 869 4>,
 			<&intc 0 870 4>,<&intc 0 871 4>,
 			<&intc 0 872 4>,<&intc 0 858 4>;
@@ -119,11 +120,11 @@
 		snps,tso;
 		snps,pbl = <32>;
 		mac-address = [00 55 7B B5 7D f7];
-		rx-fifo-depth = <4096>;
-		tx-fifo-depth = <4096>;
+		rx-fifo-depth = <5120>;
+		tx-fifo-depth = <5120>;
 		snps,mtl-rx-config = <&mtl_rx_setup>;
 		snps,mtl-tx-config = <&mtl_tx_setup>;
-		queue = <1>;
+		queue = <0>;
 		emac0_emb_smmu: emac0_emb_smmu {
 			compatible = "qcom,emac-thin-smmu-embedded";
 			iommus = <&apps_smmu 0x122 0x1>;
@@ -205,6 +206,12 @@
 		reusable;
 		size = <0 0x1000000>;
 	};
+
+	ipc_shmem_mem_cached: ipc_shmem_cached_region {
+		compatible = "shared-dma-pool";
+		no-map;
+		reg = <0x0 0x00000000 0x0 0x00000000>;
+	};
 };
 
 &qcom_dma_heaps {
@@ -218,8 +225,8 @@
 
 / {
 	chosen {
-		bootargs = "rcupdate.rcu_expedited=1 rcu_nocbs=0-7 cgroup.memory=nokmem,nosocket kpti=0 ufshcd-core.use_mcq_mode=n qcom_dma_heaps.enable_bitstream_contig_heap=y arm64.nopauth kasan=off msm_show_resume_irq.debug_mask=1 ";
-		bootconfig = "androidboot.usbcontroller=a600000.dwc3 androidboot.fstab_suffix=gen4.qcom androidboot.dtbo_idx=3";
+		bootargs = "rcupdate.rcu_expedited=1 rcu_nocbs=0-7 cgroup.memory=nokmem,nosocket kpti=0 ufshcd-core.use_mcq_mode=n qcom_dma_heaps.enable_bitstream_contig_heap=y arm64.nopauth kasan=off msm_show_resume_irq.debug_mask=1 fw_devlink.strict=1";
+		bootconfig = "androidboot.usbcontroller=a600000.dwc3 androidboot.fstab_suffix=gen4.qcom androidboot.dtbo_idx=4";
 	};
 
 	rename_devices: rename_devices {
@@ -232,14 +239,16 @@
 					"vdj", "vdk", "vdl",
 					"vdm", "vdn", "vdo",
 					"vdp", "vdq", "vdr",
-					"vds", "vdt", "vdu";
+					"vds", "vdt", "vdu",
+					"vdv";
 			rename-dev = "super", "userdata", "metadata",
 					"persist", "modem_a","bluetooth_a",
 					"misc", "vbmeta_a", "vbmeta_b",
 					"boot_a", "dtbo_a", "dsp_a",
 					"modem_b", "bluetooth_b", "boot_b",
 					"dtbo_b", "dsp_b", "vendor_boot_b",
-					"vendor_boot_a", "init_boot_b", "init_boot_a";
+					"vendor_boot_a", "init_boot_b", "init_boot_a",
+					"swap";
 		};
 	};
 };
@@ -313,5 +322,95 @@
 	va_mini_dump {
 		compatible = "qcom,va-minidump";
 		memory-region = <&va_md_mem>;
+	};
+};
+
+&soc {
+	ipcc_self_ping_apss_cl0: ipcc-self-ping-apss_cl0 {
+		compatible = "qcom,ipcc-self-ping";
+		mboxes = <&ipcc_compute_l0_apps_ns1 IPCC_CLIENT_APSS_NS1
+				IPCC_COMPUTE_L0_SIGNAL_MSG>;
+		interrupt-parent = <&ipcc_compute_l0_apps_ns1>;
+		interrupts = <IPCC_CLIENT_APSS_NS1
+				IPCC_COMPUTE_L0_SIGNAL_MSG
+				IRQ_TYPE_EDGE_RISING>;
+		memory-region = <&ipc_shmem_mem_cached>;
+	};
+
+	ipcc_self_ping_apss_cl0_ack: ipcc-self-ping-apss_cl0_ack {
+		compatible = "qcom,ipcc-self-ping";
+		mboxes = <&ipcc_compute_l0_apps_ns1 IPCC_CLIENT_APSS_NS1
+				IPCC_COMPUTE_L0_SIGNAL_ACK>;
+		interrupt-parent = <&ipcc_compute_l0_apps_ns1>;
+		interrupts = <IPCC_CLIENT_APSS_NS1
+				IPCC_COMPUTE_L0_SIGNAL_ACK
+				IRQ_TYPE_EDGE_RISING>;
+		memory-region = <&ipc_shmem_mem_cached>;
+	};
+
+	ipcc_self_ping_adsp_cl0: ipcc-self-ping-adsp_cl0 {
+		compatible = "qcom,ipcc-self-ping";
+		mboxes = <&ipcc_compute_l0_apps_ns1 IPCC_CLIENT_LPASS
+				IPCC_COMPUTE_L0_SIGNAL_MSG>;
+		interrupt-parent = <&ipcc_compute_l0_apps_ns1>;
+		interrupts = <IPCC_CLIENT_LPASS
+				IPCC_COMPUTE_L0_SIGNAL_MSG
+				IRQ_TYPE_EDGE_RISING>;
+		memory-region = <&ipc_shmem_mem_cached>;
+	};
+
+	ipcc_self_ping_adsp_cl0_ack: ipcc-self-ping-adsp_cl0_ack {
+		compatible = "qcom,ipcc-self-ping";
+		mboxes = <&ipcc_compute_l0_apps_ns1 IPCC_CLIENT_LPASS
+				IPCC_COMPUTE_L0_SIGNAL_ACK>;
+		interrupt-parent = <&ipcc_compute_l0_apps_ns1>;
+		interrupts = <IPCC_CLIENT_LPASS
+				IPCC_COMPUTE_L0_SIGNAL_ACK
+				IRQ_TYPE_EDGE_RISING>;
+		memory-region = <&ipc_shmem_mem_cached>;
+	};
+
+	ipcc_self_ping_gpdsp0_cl0: ipcc-self-ping-gpdsp0_cl0 {
+		compatible = "qcom,ipcc-self-ping";
+		mboxes = <&ipcc_compute_l0_apps_ns1 IPCC_CLIENT_GPDSP0
+				IPCC_COMPUTE_L0_SIGNAL_MSG>;
+		interrupt-parent = <&ipcc_compute_l0_apps_ns1>;
+		interrupts = <IPCC_CLIENT_GPDSP0
+				IPCC_COMPUTE_L0_SIGNAL_MSG
+				IRQ_TYPE_EDGE_RISING>;
+		memory-region = <&ipc_shmem_mem_cached>;
+	};
+
+	ipcc_self_ping_gpdsp0_cl0_ack: ipcc-self-ping-gpdsp0_cl0_ack {
+		compatible = "qcom,ipcc-self-ping";
+		mboxes = <&ipcc_compute_l0_apps_ns1 IPCC_CLIENT_GPDSP0
+				IPCC_COMPUTE_L0_SIGNAL_ACK>;
+		interrupt-parent = <&ipcc_compute_l0_apps_ns1>;
+		interrupts = <IPCC_CLIENT_GPDSP0
+				IPCC_COMPUTE_L0_SIGNAL_ACK
+				IRQ_TYPE_EDGE_RISING>;
+		memory-region = <&ipc_shmem_mem_cached>;
+	};
+
+	ipcc_self_ping_gpdsp1_cl0: ipcc-self-ping-gpdsp1_cl0 {
+		compatible = "qcom,ipcc-self-ping";
+		mboxes = <&ipcc_compute_l0_apps_ns1 IPCC_CLIENT_GPDSP1
+				IPCC_COMPUTE_L0_SIGNAL_MSG>;
+		interrupt-parent = <&ipcc_compute_l0_apps_ns1>;
+		interrupts = <IPCC_CLIENT_GPDSP1
+				IPCC_COMPUTE_L0_SIGNAL_MSG
+				IRQ_TYPE_EDGE_RISING>;
+		memory-region = <&ipc_shmem_mem_cached>;
+	};
+
+	ipcc_self_ping_gpdsp1_cl0_ack: ipcc-self-ping-gpdsp1_cl0_ack {
+		compatible = "qcom,ipcc-self-ping";
+		mboxes = <&ipcc_compute_l0_apps_ns1 IPCC_CLIENT_GPDSP1
+				IPCC_COMPUTE_L0_SIGNAL_ACK>;
+		interrupt-parent = <&ipcc_compute_l0_apps_ns1>;
+		interrupts = <IPCC_CLIENT_GPDSP1
+				IPCC_COMPUTE_L0_SIGNAL_ACK
+				IRQ_TYPE_EDGE_RISING>;
+		memory-region = <&ipc_shmem_mem_cached>;
 	};
 };

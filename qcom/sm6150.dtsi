@@ -377,7 +377,7 @@
 	};
 
 	chosen: chosen {
-		bootargs = "kpti=0 ssbd=force-off qcom_dma_heaps.enable_bitstream_contig_heap=y rcupdate.rcu_expedited=1 cpufreq.default_governor=performance";
+		bootargs = "kpti=0 ssbd=force-off qcom_dma_heaps.enable_bitstream_contig_heap=y rcupdate.rcu_expedited=1 cpufreq.default_governor=performance fw_devlink.strict=1";
 	 };
 
 	soc: soc { };
@@ -1532,6 +1532,9 @@
 
 		bus-width = <4>;
 		qcom,restore-after-cx-collapse;
+
+		no-sdio;
+		no-mmc;
 
 		/* DLL HSR settings. Refer go/hsr - <Target> DLL settings */
 		qcom,dll-hsr-list = <0x0007642C 0x0 0x0 0x00010800 0x80040868>;

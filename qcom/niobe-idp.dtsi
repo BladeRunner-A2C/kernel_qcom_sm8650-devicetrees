@@ -122,8 +122,8 @@
 };
 
 &eusb2_phy1 {
-	dummy-supply = <&pm8550b_eusb2_sec_repeater>;
-	usb-repeater = <&pm8550b_eusb2_sec_repeater>;
+	dummy-supply = <&pm8550b_repeater>;
+	usb-repeater = <&pm8550b_repeater>;
 };
 
 &usb0 {
@@ -149,10 +149,11 @@
 	qcom,wireless-charging-not-supported;
 	qcom,thermal-mitigation-step = <500000>;
 	#cooling-cells = <2>;
+	qcom,multiport-usb;
 };
 
 &ufsphy_mem {
-	compatible = "qcom,ufs-phy-qmp-v4-pineapple";
+	compatible = "qcom,ufs-phy-qmp-v4-niobe";
 
 	/* VDDA_UFS_CORE */
 	vdda-phy-supply = <&L3C>;

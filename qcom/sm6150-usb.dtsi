@@ -35,12 +35,15 @@
 		qcom,core-clk-rate = <200000000>;
 		qcom,core-clk-rate-hs = <66666667>;
 		qcom,dwc-usb3-msm-tx-fifo-size = <21288>;
-		qcom,host-poweroff-in-pm-suspend;
-		qcom,hibernate-skip-thaw;
-		qcom,disable-host-ssphy-powerdown;
 		interconnect-names = "usb-ddr", "ddr-usb";
 		interconnects = <&aggre1_noc MASTER_USB3_0 &mc_virt SLAVE_EBI1>,
 				<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_USB3>;
+
+		/*
+		 * Establish dependency on smmu driver so that depopulate path of
+		 * deferred probe doesn't run into existing bug in smmu driver.
+		 */
+		dummy-supply = <&apps_smmu>;
 
 		dwc3@a600000 {
 			compatible = "snps,dwc3";
@@ -62,7 +65,8 @@
 			snps,dis-u1-entry-quirk;
 			snps,dis-u2-entry-quirk;
 			snps,usb3_lpm_capable;
-			maximum-speed = "high-speed";
+			snps,usb2-lpm-disable;
+			maximum-speed = "super-speed";
 			dr_mode = "otg";
 			usb-role-switch;
 		};
@@ -275,8 +279,6 @@
 		qcom,use-pdc-interrupts;
 
 		qcom,default-mode-host;
-		qcom,host-poweroff-in-pm-suspend;
-		qcom,hibernate-skip-thaw;
 
 		USB3_GDSC-supply = <&usb20_sec_gdsc>;
 		clocks = <&gcc  GCC_USB20_SEC_MASTER_CLK>,
@@ -296,6 +298,12 @@
 		interconnect-names = "usb-ddr", "ddr-usb";
 		interconnects = <&aggre1_noc MASTER_USB2 &mc_virt SLAVE_EBI1>,
 				<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_USB2>;
+
+		/*
+		 * Establish dependency on smmu driver so that depopulate path of
+		 * deferred probe doesn't run into existing bug in smmu driver.
+		 */
+		dummy-supply = <&apps_smmu>;
 
 		dwc3@a800000 {
 			compatible = "snps,dwc3";

@@ -35,9 +35,9 @@
 		extcon = <&eud>;
 		usb-role-switch;
 
-		qcom,core-clk-rate = <133333333>;
+		qcom,core-clk-rate = <200000000>;
 		qcom,core-clk-rate-hs = <66666667>;
-
+		qcom,core-clk-rate-disconnected = <133333333>;
 		qcom,pm-qos-latency = <2>;
 
 		qcom,num-gsi-evt-buffs = <0x3>;

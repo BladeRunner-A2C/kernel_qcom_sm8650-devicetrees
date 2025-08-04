@@ -44,7 +44,7 @@
 	};
 
 	chosen: chosen {
-		bootargs = "loglevel=6 log_buf_len=256K printk.console_no_auto_verbose=1 kpti=0 swiotlb=noforce loop.max_part=7 pcie_ports=compat irqaffinity=0-5 cpufreq.default_governor=performance kasan=off cgroup.memory=nokmem,nosocket disable_dma32=on rcupdate.rcu_expedited=1 rcu_nocbs=0-7 kernel.panic_on_rcu_stall=1 no-steal-acc ftrace_dump_on_oops ufshcd-core.use_mcq_mode=n can.stats_timer=0 fw_devlink.strict=1 service_locator.enable=1 firmware_class.path=/vendor/firmware_mnt/image,/vendor/firmware";
+		bootargs = "loglevel=6 log_buf_len=256K printk.console_no_auto_verbose=1 kpti=0 swiotlb=noforce loop.max_part=7 pcie_ports=compat irqaffinity=0-5 cpufreq.default_governor=performance kasan=off cgroup.memory=nokmem,nosocket disable_dma32=on cgroup_disable=pressure rcupdate.rcu_expedited=1 rcu_nocbs=0-7 kernel.panic_on_rcu_stall=1 no-steal-acc ftrace_dump_on_oops ufshcd-core.use_mcq_mode=n can.stats_timer=0 fw_devlink.strict=1 service_locator.enable=1 firmware_class.path=/vendor/firmware_mnt/image,/vendor/firmware";
 		stdout-path = "serial0:115200n8";
 	};
 
@@ -438,9 +438,9 @@
 	gic-interrupt-router {
 		compatible = "qcom,gic-intr-routing";
 		/* keep silver core only to avoid wakeup of gold cores */
-		qcom,gic-class0-cpus = <0 1 2 3 4 5>;
+		qcom,gic-class0-cpus = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5>;
 		/* keep gold cores in class1 */
-		qcom,gic-class1-cpus = <6 7>;
+		qcom,gic-class1-cpus = <&CPU6 &CPU7>;
 	};
 
 	show_resume_irqs@f200000 {
@@ -2048,7 +2048,7 @@
 					< 1286400 1075200 >,
 					< 1478400 1209600 >,
 					< 1632000 1305600 >,
-					< 1804800 1440000 >;
+					< 1804800 1401600 >;
 				qcom,sampling-enabled;
 			};
 
@@ -2062,8 +2062,7 @@
 					< 1344000  940800 >,
 					< 1651200 1209600 >,
 					< 1900800 1305600 >,
-					< 2054400 1401600 >,
-					< 2361600 1440000 >;
+					< 2054400 1401600 >;
 				qcom,sampling-enabled;
 			};
 
@@ -2151,7 +2150,7 @@
 		iommus = <&apps_smmu 0x86 0x0011>,
 			<&apps_smmu 0x92 0x0>,
 			<&apps_smmu 0x96 0x0011>,
-			<&apps_smmu 0x98 0x0011>,
+			<&apps_smmu 0x98 0x0001>,
 			<&apps_smmu 0x9F 0x0>,
 			<&apps_smmu 0x84 0x0011>,
 			<&apps_smmu 0x94 0x0011>;
@@ -2173,7 +2172,7 @@
 			iommus = <&apps_smmu 0x93 0>,
 				<&apps_smmu 0x9C 0x0001>,
 				<&apps_smmu 0x9E 0>,
-				<&apps_smmu 0x9D 0x0011>;
+				<&apps_smmu 0x9D 0x0001>;
 			qcom,iommu-vmid = <0x9>; /* VMID_CP_BITSTREAM */
 			qcom,secure-context-bank;
 		};
